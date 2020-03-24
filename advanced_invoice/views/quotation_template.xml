@@ -23,22 +23,27 @@
                                 <tr>
                                     <td style="width: 60%; text-align: left;line-height: 200%;" rowspan="3"
                                         valign="top">
-                                        <span style="font-family:Roboto, sans-serif; font-size:30px;">SOFACOMPANY</span>
+                                        <div style="height: 0px;">
+                                        <img height="22px" src="/advanced_invoice/static/src/img/logo1.png"/>
+                                        </div>
+                                        <img height="22px" src="/advanced_invoice/static/src/img/logo1.png"/>
                                         <br/>
-                                        <span style="font-family:Roboto, sans-serif; font-size:50px;">
+                                        <div style="height: 15px"></div>
+                                        <span style="font-family:Roboto, sans-serif; font-size:50px; font-weight: 1000;">
                                             <strong>QUOTE</strong>
                                         </span>
+                                        <div style="height: 8px"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 20%;">
-                                        <b style="font-size:16px;">QUOTATION INFO</b>
+                                    <td style="width: 30%;">
+                                        <b style="font-size:16px;">QUOTATION INFORMATION</b>
                                         <br/>
-                                        <span style="font-size:14px;">QUOTATION NO.</span>
+                                        <span style="font-size:14px;">Quotation No.</span>
                                         <br/>
-                                        <span style="font-size:14px;">DATE.</span>
+                                        <span style="font-size:14px;">Date.</span>
                                         <br/>
-                                        <span style="font-size:14px;">PREPARE BY</span>
+                                        <span style="font-size:14px;">Prepared by</span>
                                     </td>
                                     <td style="width: 20%;font-size:14px;">
                                         <br/>
