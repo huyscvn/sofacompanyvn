@@ -1,0 +1,312 @@
+<odoo>
+    <data>
+        <template id="report_advanced_invoice">
+
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="doc">
+
+                    <div class="page" style="font-family:Open Sans, sans-serif;">
+
+                        <style type="text/css">>
+                            html *
+                            {
+                            font-family:Open Sans, sans-serif;
+                            }
+                            p {font-size: 14px;
+                            line-height: 15px;
+                            margin-bottom: 5px;
+                            }
+
+                        </style>
+                        <div style="margin-botom:10px">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 60%; text-align: left;line-height: 200%;" rowspan="3"
+                                        valign="top">
+                                        <div style="height: 0px;">
+                                        <img height="22px" src="/advanced_invoice/static/src/img/logo1.png"/>
+                                        </div>
+                                        <img height="22px" src="/advanced_invoice/static/src/img/logo1.png"/>
+                                        <br/>
+                                        <div style="height: 15px"></div>
+                                        <span style="font-family:Roboto, sans-serif; font-size:50px; font-weight: 1000;">
+                                            <strong>INVOICE</strong>
+                                        </span>
+                                        <div style="height: 8px"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        <b style="font-size:16px;">INVOICE INFO</b>
+                                        <br/>
+                                        <span style="font-size:14px;">Invoice No.</span>
+                                        <br/>
+                                        <span style="font-size:14px;">Date</span>
+                                        <br/>
+                                        <span style="font-size:14px;">Invoice Ref:</span>
+                                    </td>
+                                    <td style="width: 20%;font-size:14px;">
+                                        <br/>
+                                        <span t-field="doc.name"/>
+                                        <br/>
+                                        <span t-field="doc.invoice_date" t-options-widget="&quot;date&quot;"/>
+                                        <br/>
+                                        <span t-field="doc.invoice_origin"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <table style="width: 100%;">
+                            <tr style="font-size:16px;">
+                                <th style="width: 20%;">INVOICE TO</th>
+                                <th style="width: 40%;">COMPANY</th>
+                                <th style="width: 40%;">DELIVERY TO</th>
+                            </tr>
+                            <tr style="font-size:16px;">
+                                <td style="width: 20%;">
+                                    <span t-field="doc.partner_id.name"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.mobile"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.email"/>
+                                </td>
+                                <td style="width: 40%;    padding-right: 5px;">
+                                    <span t-field="doc.partner_id.parent_id.name"/>
+                                    <br/>
+                                    <t t-if="doc.partner_id.parent_id.vat">
+                                    <span t-esc="'MST:' +doc.partner_id.parent_id.vat"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.parent_id.contact_address_complete"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="doc.partner_id.parent_id.contact_address_complete"/>
+                                    </t>
+                                </td>
+                                <td style="width: 40%;">
+                                    <span t-field="doc.partner_shipping_id.name"/>
+                                    <br/>
+                                    <span t-field="doc.partner_shipping_id.mobile"/>
+                                    <br/>
+                                    <span t-field="doc.partner_shipping_id.contact_address_complete"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;font-size:14px;padding-top: 20px;" colspan="4">
+                                    <em>*All prices are in VND &amp; included VAT</em>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table">
+                            <thead>
+                                <tr style="height: 18px; font-size:14px; font-weight:bold">
+                                    <td style="width: 40%; " colspan="2">DESCRIPTION</td>
+                                    <td style="width: 15%;  " colspan="2">SPECS</td>
+                                    <td style="width: 3%; ">QTY</td>
+                                    <td style="width: 15%;text-align:right ">PRICE</td>
+                                    <td style="width: 8%; ">DISC.(%)</td>
+                                    <td style="width: 17%;text-align:right">AMOUNT</td>
+                                </tr>
+                            </thead>
+                            <tbody t-foreach="doc.invoice_line_ids" t-as="table_line">
+                                <tr style="height: 5px;">
+                                    <td style="width: 15%">
+                                        <img t-attf-src="data:image/*;base64,{{table_line.product_id.image_128}}"
+                                             style="max-height:100%; max-width:100%;"/>
+                                    </td>
+                                    <td style="width: 25%">
+                                        <t t-if="table_line.product_id.x_product_model_id.x_name">
+                                            <b style=" font-size:13px;"
+                                               t-esc="table_line.product_id.x_product_model_id.x_name + ' - ' + table_line.product_id.name"/>
+                                        </t>
+                                        <t t-else="">
+                                            <b style=" font-size:13px;"
+                                               t-esc="table_line.product_id.name"/>
+                                        </t>
+                                        <p>
+                                            <t t-esc="table_line.product_id.x_product_function_id.x_name"/>
+                                        </p>
+                                        <p>
+                                            <t t-esc="table_line.product_id.x_product_fabric_id.x_name"/>
+                                        </p>
+                                        <p>
+                                            <t t-esc="table_line.product_id.x_product_legs_id.x_name"/>
+                                        </p>
+                                    </td>
+                                    <td style="width: 2%;">
+                                        <t t-if="table_line.product_id.x_package_width">
+                                            <p>W</p>
+                                        </t>
+                                        <t t-if="table_line.product_id.x_package_depth">
+                                            <p>D</p>
+                                        </t>
+                                        <t t-if="table_line.product_id.x_package_height">
+                                            <p>H</p>
+                                        </t>
+                                    </td>
+                                    <td style="width: 13%;">
+                                        <t t-if="table_line.product_id.x_package_width">
+                                            <p>
+                                                <t t-esc="table_line.product_id.x_package_width"/>
+                                                cm
+                                            </p>
+                                        </t>
+                                        <t t-if="table_line.product_id.x_package_depth">
+                                            <p>
+                                                <t t-esc="table_line.product_id.x_package_depth"/>
+                                                cm
+                                            </p>
+                                        </t>
+                                        <t t-if="table_line.product_id.x_package_height">
+                                            <p>
+                                                <t t-esc="table_line.product_id.x_package_height"/>
+                                                cm
+                                            </p>
+                                        </t>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <p>
+                                            <t t-esc="int(table_line.quantity)"/>
+                                        </p>
+                                    </td>
+                                    <td style="width: 15%;text-align:right">
+                                        <p>
+                                            <t t-esc="'{0:,.0f}'.format(int(table_line.price_unit * (1- table_line.discount/100)))"
+                                            />
+                                        </p>
+                                        <t t-if="table_line.discount">
+                                            <del style="font-size:11px;">
+                                                <t t-esc="'{0:,.0f}'.format(int(table_line.price_unit))"/>
+                                            </del>
+                                        </t>
+                                    </td>
+                                    <td style="width: 8%; ">
+                                        <t t-if="table_line.discount">
+                                            <p>
+                                                <t t-esc="table_line.discount"/>
+                                                %
+                                            </p>
+                                        </t>
+                                        <t t-else="">
+                                            <p>-</p>
+                                        </t>
+                                    </td>
+                                    <td style="width: 17%;text-align:right">
+                                        <p>
+                                            <t t-esc="'{0:,.0f}'.format(int(table_line.price_subtotal))"/>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr/>
+                        <table style="width: 100%;border-spacing: 5px 1px;">
+                            <tr>
+                                <td style="width: 50%; font-size:15px ;padding-right: 10px">
+                                    <b>ORDER NOTE</b>
+                                    <br/>
+                                    <t t-esc="doc.narration"/>
+                                </td>
+                                <td style="width: 25%; font-size: 17px;text-align:left">
+                                    <strong>TOTAL</strong><br/>
+                                    <strong>DEPOSIT</strong><br/>
+                                    <strong>REMAIN</strong><br/>
+                                    <strong>PAYMENT METHOD</strong>
+                                </td>
+                                <td style="width: 25%; font-size: 17px;text-align:right">
+                                    <h>
+                                        <strong>
+                                            <t t-esc="'{0:,.0f}'.format(int(doc.amount_total))"/>
+                                        </strong><br/>
+                                         <strong>
+                                            <t t-esc="'{0:,.0f}'.format(int(doc.amount_total)-int(doc.amount_residual))"/>
+                                        </strong><br/>
+                                        <strong>
+                                            <t t-esc="'{0:,.0f}'.format(int(doc.amount_residual))"/>
+                                        </strong><br/>
+                                         <strong>
+                                      <t t-esc="doc.x_studio_payment_method.x_name"/>
+                                        </strong>
+                                    </h>
+                                </td>
+
+                            </tr>
+                        </table>
+                        <div style="width: 100%;margin-top: 15px;font-size:13px">
+                            <b>*NOTICE</b>
+                            <br/>
+                            <em>
+                                <p>Lead time for producing is 4 to 5 weeks after the deposit is received and
+                                    confirmed.
+                                </p>
+                            </em>
+                            <br/>
+                            <em>
+                                <p>The DYO product(s) is NOT eligible to be returned with any conditions excepting
+                                    problems from manufacturer.
+                                </p>
+                            </em>
+                            <br/>
+                            <em>
+                                <p>The warranty policy is applied with terms and conditions:</p>
+                                <p>- Frame-5 years;</p>
+                                <p>- Foam-3 years;</p>
+                                <p>- Fabric-1year.</p>
+                            </em>
+                            <br/>
+                            <em>VAT information for Red Invoice Request must be informed at least 1 day before delivery.
+                                After that, we may refuse to issue Red Invoice without any
+                                explanations.
+                            </em>
+                        </div>
+                        <div class="footer" style="
+                            width: 100%;
+                            color: white;
+                            height:500px;
+                            background-color: black;
+                            font-family:Open Sans, sans-serif ;
+                            position: absolute;">
+                            <table style="width: 100%;
+                            background-color: black;
+                            margin-left: 30px;
+                            margin-right: 30px;
+                            text-align: left;
+                            border-spacing: 10px 1px;
+                            ">
+                                <tr>
+                                    <td style="width: 60%">
+                                        <br/>
+                                        <strong style="text-align: left;;font-size: 30px;">SOFACOMPANY</strong>
+                                    </td>
+                                    <td style="width: 40%; text-align: left;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 60%; text-align: left; font-size: 14px;">
+                                        <strong>CONTRACT INFORMATION</strong>
+                                        <br/>
+                                        Hotline: 1900 636 845
+                                        <br/>
+                                        Email: info-vn@sofacompany.com
+                                        <br/>
+                                        Website: vn.sofacompany.com
+                                        <br/>
+                                        Showroom: A1.00.09, Tower A1 Sarimi, 74 Nguyen Co Thach, Sala Residence,District
+                                        2,
+                                        Ho Chi Minh City
+                                    </td>
+                                    <td style="width: 40%; text-align: left; font-size: 14px;">
+                                        <b>BANK ACCOUNT INFORMATION</b>
+                                        <br/>Name: Cong Ty TNHH Sofacompany Viet Nam
+                                        <br/>Number: 0381000416834 (VND)
+                                        <br/>Bank: Vietcombank - Thu Duc branch
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

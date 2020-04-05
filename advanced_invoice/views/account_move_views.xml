@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="action_print_advanced_invoice"
+                string="# PRINT INVOICE #"
+                model="account.move"
+                report_type="qweb-pdf"
+                file="advanced_invoice.report_advanced_invoice"
+                name="advanced_invoice.report_advanced_invoice"
+                print_report_name="'Invoice-%s' % (object.name)"
+                groups="base.group_system"
+        />
+    </data>
+</odoo>
