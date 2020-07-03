@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import datetime
 
 
 class ProductTemplate(models.Model):
@@ -43,8 +44,9 @@ class AccountMove(models.Model):
                                  compute='compute_delivery_cost',
                                  compute_sudo=True, store=True)
     sale_order_id = fields.Many2one('sale.order', compute='_get_sale_order', store=True)
-    picking_id = fields.Many2one('stock.picking', compute='_get_picking_id', store=True)
-
+    # picking_ids = fields.Many2one('stock.picking', compute='_get_picking_id', store=True)
+    picking = fields.Char(compute='_get_picking_id')
+    picking_date = fields.Char(compute='_get_picking_id')
 
     @api.depends('invoice_line_ids')
     def compute_delivery_cost(self):
@@ -65,9 +67,17 @@ class AccountMove(models.Model):
     @api.depends('sale_order_id.picking_ids.state')
     def _get_picking_id(self):
         for invoice in self:
-            invoice.picking_id = False
+            invoice.picking = ''
+            invoice.picking_date = ''
+            string = ''
+            date_string = ''
             picking = self.env['stock.picking'].sudo().search(
-                [('id', 'in', invoice.sale_order_id.picking_ids.ids), ('state', 'not in', ['cancel'])], limit=1).id
+                [('id', 'in', invoice.sale_order_id.picking_ids.ids), ('state', 'not in', ['cancel'])])
             if picking:
-                invoice.picking_id = picking
+                for p in picking:
+                    string += p.name + ', '
+                    date_string += datetime.datetime.strftime(p.scheduled_date, '%d-%m-%Y') + ', '
+                invoice.picking = string[:-2]
+                invoice.picking_date = date_string[:-2]
+
 
