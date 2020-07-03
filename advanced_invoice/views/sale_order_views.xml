@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <report
-                id="action_advanced_quotation"
-                string="# IN QUOTATION TEMPLATE DRAFT#"
-                model="sale.order"
-                report_type="qweb-pdf"
-                file="advanced_invoice.report_advanced_saleorder_1"
-                name="advanced_invoice.report_advanced_saleorder_1"
-                print_report_name="'Quotation-%s' % (object.name)"
-                groups="base.group_system"
-        />
+<!--        <report-->
+<!--                id="action_advanced_quotation"-->
+<!--                string="# IN QUOTATION TEMPLATE DRAFT#"-->
+<!--                model="sale.order"-->
+<!--                report_type="qweb-pdf"-->
+<!--                file="advanced_invoice.report_advanced_saleorder_1"-->
+<!--                name="advanced_invoice.report_advanced_saleorder_1"-->
+<!--                print_report_name="'Quotation-%s' % (object.name)"-->
+<!--                groups="base.group_system"-->
+<!--        />-->
         <report
                 id="action_print_advanced_quotation"
                 string="# PRINT QUOTATION #"
@@ -28,7 +28,7 @@
             <field name="format">A4</field>
             <field name="orientation">Portrait</field>
             <field name="margin_top">10</field>
-            <field name="margin_bottom">50</field>
+            <field name="margin_bottom">40</field>
             <field name="margin_left">6</field>
             <field name="margin_right">6</field>
             <field name="header_line" eval="False" />

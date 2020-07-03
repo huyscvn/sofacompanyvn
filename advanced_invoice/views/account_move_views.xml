@@ -12,5 +12,8 @@
                 print_report_name="'Invoice-%s' % (object.name)"
                 groups="base.group_system"
         />
+         <record id="action_print_advanced_invoice" model="ir.actions.report">
+            <field name="paperformat_id" ref="advanced_invoice.custom_paper_format"/>
+        </record>
     </data>
 </odoo>
