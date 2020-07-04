@@ -20,7 +20,7 @@
     'version': '12.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product','sale','sale_stock'],
+    'depends': ['base', 'product','sale','sale_stock','sale_coupon','stock'],
 
     # always loaded
     'data': [
@@ -31,6 +31,7 @@
         'views/invoice_template.xml',
         'views/account_move_views.xml',
         'views/product_template_views.xml',
+        'views/stock_picking.xml',
     ],
     # only loaded in demonstration mode
 

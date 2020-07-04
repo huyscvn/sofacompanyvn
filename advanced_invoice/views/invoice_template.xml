@@ -43,7 +43,9 @@
                                     <b>INVOICE NO.</b>
                                 </td>
                                 <td style="width: 40%;">
-                                    <span t-field="doc.name"/>
+                                    <t t-if="doc.sale_order_id">
+                                        <span t-field="doc.sale_order_id.x_studio_invoice_id"/>
+                                    </t>
                                 </td>
                                 <th style="width: 40%;">DELIVERY TO</th>
                             </tr>
@@ -129,12 +131,13 @@
                                     <td style="width: 15%;  " colspan="2">SPECS</td>
                                     <td style="width: 3%; ">QTY</td>
                                     <td style="width: 15%; ">PRICE</td>
-                                    <td style="width: 8%; ">DISC.(%)</td>
-                                    <td style="width: 17%;text-align:right">AMOUNT</td>
+                                    <td style="width: 8%; ">DISCOUNT</td>
+                                    <td style="width: 17%;text-align:right">ITEM TOTAL</td>
                                 </tr>
                             </thead>
                             <tbody t-foreach="doc.invoice_line_ids" t-as="table_line">
                                 <t t-if="table_line.product_id.is_delivery != True">
+                                <t t-if="table_line.product_id.is_discount != True">
                                     <tr style="height: 5px;">
                                         <td style="width: 15%">
                                             <img t-attf-src="data:image/*;base64,{{table_line.product_id.image_128}}"
@@ -224,6 +227,7 @@
                                         </td>
                                     </tr>
                                 </t>
+                                </t>
                             </tbody>
                         </table>
                         <hr/>
@@ -237,7 +241,7 @@
                                         <b>SUB-TOTAL</b>
                                     </td>
                                     <td style="width: 25%; text-align:right;font-size:14px">
-                                        <t t-esc="'{0:,.0f}'.format(float(doc.amount_total-doc.delivery_cost))"/>
+                                        <t t-esc="'{0:,.0f}'.format(float(doc.amount_total-doc.delivery_cost+doc.discount_compute))"/>
                                     </td>
                                 </tr>
                                 <tr style="">
@@ -258,7 +262,7 @@
                                         <b>DISCOUNTED</b>
                                     </td>
                                     <td style="text-align:right;font-size:14px">
-                                        <t t-esc="'{0:,.0f}'.format(float(sum((m.price_unit * m.quantity * m.discount/100) for m in doc.invoice_line_ids)))"/>
+                                        <t t-esc="'{0:,.0f}'.format(float(sum((m.price_unit * m.quantity * m.discount/100) for m in doc.invoice_line_ids)+doc.discount_compute))"/>
                                     </td>
                                 </tr>
                                 <tr style="">

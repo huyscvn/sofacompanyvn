@@ -8,6 +8,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     is_delivery = fields.Boolean(string='Delivery product', default=False)
+    is_discount = fields.Boolean(string='Discount product', default=False)
 
     @api.onchange('x_product_function_id')
     def onchange_x_product_function_id(self):
@@ -28,6 +29,10 @@ class SaleOrder(models.Model):
     delivery_cost = fields.Float(string="phí vận chuyển",
                                                 compute='compute_delivery_cost',
                                                 compute_sudo=True,store=True)
+
+    discount_compute = fields.Float(string="Tổng tiền giảm giá",
+                                 compute='compute_discount',
+                                 compute_sudo=True, store=True)
     @api.depends('order_line')
     def compute_delivery_cost(self):
         for rec in self:
@@ -36,6 +41,14 @@ class SaleOrder(models.Model):
                 if line.product_id.product_tmpl_id.is_delivery:
                     rec.delivery_cost += line.price_subtotal
 
+    @api.depends('order_line')
+    def compute_discount(self):
+        for rec in self:
+            rec.discount_compute = 0
+            for line in rec.order_line:
+                if line.product_id.product_tmpl_id.is_discount:
+                    rec.discount_compute += abs(line.price_subtotal)
+
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
@@ -43,6 +56,9 @@ class AccountMove(models.Model):
     delivery_cost = fields.Float(string="phí vận chuyển",
                                  compute='compute_delivery_cost',
                                  compute_sudo=True, store=True)
+    discount_compute = fields.Float(string="Tổng tiền giảm giá",
+                                    compute='compute_discount',
+                                    compute_sudo=True, store=True)
     sale_order_id = fields.Many2one('sale.order', compute='_get_sale_order', store=True)
     # picking_ids = fields.Many2one('stock.picking', compute='_get_picking_id', store=True)
     picking = fields.Char(compute='_get_picking_id')
@@ -55,6 +71,14 @@ class AccountMove(models.Model):
             for line in rec.invoice_line_ids:
                 if line.product_id.product_tmpl_id.is_delivery:
                     rec.delivery_cost += line.price_subtotal
+
+    @api.depends('invoice_line_ids')
+    def compute_discount(self):
+        for rec in self:
+            rec.discount_compute = 0
+            for line in rec.invoice_line_ids:
+                if line.product_id.product_tmpl_id.is_discount:
+                    rec.discount_compute += abs(line.price_subtotal)
 
     @api.depends('invoice_line_ids.sale_line_ids')
     def _get_sale_order(self):
