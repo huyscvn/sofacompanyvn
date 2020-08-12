@@ -10,7 +10,7 @@
                             <link href="https://fonts.googleapis.com/css?family=Belleza&amp;display=swap"
                                   rel="stylesheet"/>
                         </head>
-                        <style type="text/css">>
+                        <style type="text/css">
                             html *
                             {
                             font-family:Open Sans, sans-serif;
@@ -199,7 +199,7 @@
                                 </tr>
                                 <tr style="font-size:16px">
                                     <td style="width: 40%; text-align: left" rowspan="3">
-                                        <t t-esc="doc.note"/>
+                                        <pre><t t-esc="doc.note"/></pre>
                                     </td>
                                     <td style="width: 10%; "></td>
                                     <td style="width: 35%">

@@ -10,7 +10,7 @@
                             <link href="https://fonts.googleapis.com/css?family=Belleza&amp;display=swap"
                                   rel="stylesheet"/>
                         </head>
-                        <style type="text/css">>
+                        <style type="text/css">
                             html *
                             {
                             font-family:Open Sans, sans-serif;
@@ -247,7 +247,7 @@
                                 <tr style="">
                                     <td style="width: 40%; text-align: left;" rowspan="3">
                                         <t t-if="doc.sale_order_id">
-                                        <span t-field="doc.sale_order_id.note"/>
+                                            <pre><t t-esc="doc.sale_order_id.note"/></pre>
                                     </t>
                                     </td>
                                     <td style="width: 10%; "></td>
