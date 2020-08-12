@@ -246,7 +246,9 @@
                                 </tr>
                                 <tr style="">
                                     <td style="width: 40%; text-align: left;" rowspan="3">
-                                        <t t-esc="doc.narration"/>
+                                        <t t-if="doc.sale_order_id">
+                                        <span t-field="doc.sale_order_id.note"/>
+                                    </t>
                                     </td>
                                     <td style="width: 10%; "></td>
                                     <td style="width: 35%; font-size:16px">
