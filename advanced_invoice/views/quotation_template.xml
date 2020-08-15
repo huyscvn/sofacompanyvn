@@ -61,14 +61,14 @@
                                 <td style="width: 25%;">
                                     <span t-field="doc.partner_id.name"/>
                                     <br/>
-                                    <span t-field="doc.partner_shipping_id.contact_address_complete"/>
+                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>
                                 </td>
                                 <td style="width: 50%;">
                                     <span t-field="doc.partner_id.parent_id.name"/>
                                     <br/>
                                     <span t-field="doc.partner_id.parent_id.vat"/>
                                     <br/>
-                                    <span t-field="doc.partner_id.parent_id.contact_address_complete"/>
+                                    <span t-field="doc.partner_id.parent_id.contact_address_full"/>
                                 </td>
                             </tr>
                             <tr>
@@ -89,6 +89,7 @@
                                 </tr>
                             </thead>
                             <tbody t-foreach="doc.order_line" t-as="table_line">
+                                <t t-if="table_line.display_type != 'line_note'">
                                 <t t-if="table_line.product_template_id.is_delivery != True">
                                 <t t-if="table_line.product_template_id.is_discount != True">
                                     <tr style="height: 5px;">
@@ -105,15 +106,6 @@
                                                 <b style=" font-size:13px;"
                                                    t-esc="table_line.product_template_id.name"/>
                                             </t>
-                                            <p>
-                                                <t t-esc="table_line.product_template_id.x_product_function_id.x_name"/>
-                                            </p>
-                                            <p>
-                                                <t t-esc="table_line.product_template_id.x_product_fabric_id.x_name"/>
-                                            </p>
-                                            <p>
-                                                <t t-esc="table_line.product_template_id.x_product_legs_id.x_name"/>
-                                            </p>
                                         </td>
                                         <td style="width: 2%;">
                                             <t t-if="table_line.product_template_id.x_package_width">
@@ -180,6 +172,16 @@
                                         </td>
                                     </tr>
                                 </t>
+                                </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="8">
+                                            <i>
+                                                <t t-esc="table_line.name"/>
+                                            </i>
+                                        </td>
+                                    </tr>
                                 </t>
                             </tbody>
                         </table>

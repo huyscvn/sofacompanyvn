@@ -20,12 +20,12 @@
     'version': '12.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product','sale','sale_stock','sale_coupon','stock'],
+    'depends': ['base', 'product', 'sale', 'sale_stock', 'sale_coupon', 'stock', 'phone_validation', 'contacts'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/templates.xml',
+        # 'views/templates.xml',
         'views/quotation_template.xml',
         'views/sale_order_views.xml',
         'views/invoice_template.xml',

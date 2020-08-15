@@ -86,7 +86,7 @@
                                     </t>
                                 </td>
                                 <td style="width: 40%;" rowspan="3">
-                                    <span t-field="doc.partner_shipping_id.contact_address_complete"/>
+                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>
                                 </td>
                             </tr>
                             <tr style="font-size:16px;">
@@ -136,6 +136,7 @@
                                 </tr>
                             </thead>
                             <tbody t-foreach="doc.invoice_line_ids" t-as="table_line">
+                                <t t-if="table_line.display_type != 'line_note'">
                                 <t t-if="table_line.product_id.is_delivery != True">
                                 <t t-if="table_line.product_id.is_discount != True">
                                     <tr style="height: 5px;">
@@ -152,15 +153,6 @@
                                                 <b style=" font-size:13px;"
                                                    t-esc="table_line.product_id.name"/>
                                             </t>
-                                            <p>
-                                                <t t-esc="table_line.product_id.x_product_function_id.x_name"/>
-                                            </p>
-                                            <p>
-                                                <t t-esc="table_line.product_id.x_product_fabric_id.x_name"/>
-                                            </p>
-                                            <p>
-                                                <t t-esc="table_line.product_id.x_product_legs_id.x_name"/>
-                                            </p>
                                         </td>
                                         <td style="width: 2%;">
                                             <t t-if="table_line.product_id.x_package_width">
@@ -227,6 +219,16 @@
                                         </td>
                                     </tr>
                                 </t>
+                                </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="8">
+                                            <i>
+                                                <t t-esc="table_line.name"/>
+                                            </i>
+                                        </td>
+                                    </tr>
                                 </t>
                             </tbody>
                         </table>
