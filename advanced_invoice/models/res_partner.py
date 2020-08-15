@@ -10,7 +10,7 @@ class ResPartner(models.Model):
     def _compute_complete_full(self):
         for record in self:
             record.contact_address_full = ''
-            x= ''
+            x = ''
             if record.street:
                 x += record.street + ', '
             if record.street2:
@@ -22,5 +22,5 @@ class ResPartner(models.Model):
             if record.state_id:
                 x += record.state_id.name + ', '
             if record.country_id:
-                x += record.country_id.name
+                x += record.country_id.name + ', '
             record.contact_address_full = x[0:-2]

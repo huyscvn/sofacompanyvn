@@ -44,7 +44,7 @@
                                 </td>
                             </tr>
                         </table>
-                        <table style="width: 100%;">
+                        <table style="width: 100%; text-align: left;">
                             <tr style="font-size:15px;">
                                 <th style="width: 25%;">QUOTATION FOR</th>
                                 <th style="width: 25%;">SHIP TO</th>
@@ -61,14 +61,14 @@
                                 <td style="width: 25%;">
                                     <span t-field="doc.partner_id.name"/>
                                     <br/>
-<!--                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>-->
+                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>
                                 </td>
                                 <td style="width: 50%;">
                                     <span t-field="doc.partner_id.parent_id.name"/>
                                     <br/>
                                     <span t-field="doc.partner_id.parent_id.vat"/>
                                     <br/>
-<!--                                    <span t-field="doc.partner_id.parent_id.contact_address_full"/>-->
+                                    <span t-field="doc.partner_id.parent_id.contact_address_full"/>
                                 </td>
                             </tr>
                             <tr>
