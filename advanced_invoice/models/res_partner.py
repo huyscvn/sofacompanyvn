@@ -4,7 +4,7 @@ from odoo import fields, models, api
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    contact_address_full = fields.Char(store=True)
+    # contact_address_full = fields.Char()
 
     # @api.depends('street', 'street2', 'state_id', 'x_ward_id', 'x_district_id', 'country_id')
     # def _compute_complete_full(self):
