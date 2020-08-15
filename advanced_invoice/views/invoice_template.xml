@@ -86,7 +86,7 @@
                                     </t>
                                 </td>
                                 <td style="width: 40%;" rowspan="3">
-                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>
+<!--                                    <span t-field="doc.partner_shipping_id.contact_address_full"/>-->
                                 </td>
                             </tr>
                             <tr style="font-size:16px;">
