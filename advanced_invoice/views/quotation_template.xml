@@ -88,7 +88,7 @@
                                     <td style="width: 17%;text-align:right">ITEM TOTAL</td>
                                 </tr>
                             </thead>
-                            <tbody t-foreach="doc.order_line" t-as="table_line">
+                            <tbody t-foreach="doc.order_line.sorted(key=lambda m: m.sequence)" t-as="table_line">
                                 <t t-if="table_line.display_type != 'line_note'">
                                 <t t-if="table_line.product_template_id.is_delivery != True">
                                 <t t-if="table_line.product_template_id.is_discount != True">
@@ -108,32 +108,32 @@
                                             </t>
                                         </td>
                                         <td style="width: 2%;">
-                                            <t t-if="table_line.product_template_id.x_package_width">
-                                                <p>W</p>
+                                            <t t-if="table_line.product_template_id.x_length">
+                                                <p>L</p>
                                             </t>
-                                            <t t-if="table_line.product_template_id.x_package_depth">
+                                            <t t-if="table_line.product_template_id.x_depth">
                                                 <p>D</p>
                                             </t>
-                                            <t t-if="table_line.product_template_id.x_package_height">
+                                            <t t-if="table_line.product_template_id.x_height">
                                                 <p>H</p>
                                             </t>
                                         </td>
                                         <td style="width: 13%;">
-                                            <t t-if="table_line.product_template_id.x_package_width">
+                                            <t t-if="table_line.product_template_id.x_length">
                                                 <p>
-                                                    <t t-esc="table_line.product_template_id.x_package_width"/>
+                                                    <t t-esc="table_line.product_template_id.x_length"/>
                                                     cm
                                                 </p>
                                             </t>
-                                            <t t-if="table_line.product_template_id.x_package_depth">
+                                            <t t-if="table_line.product_template_id.x_depth">
                                                 <p>
-                                                    <t t-esc="table_line.product_template_id.x_package_depth"/>
+                                                    <t t-esc="table_line.product_template_id.x_depth"/>
                                                     cm
                                                 </p>
                                             </t>
-                                            <t t-if="table_line.product_template_id.x_package_height">
+                                            <t t-if="table_line.product_template_id.x_height">
                                                 <p>
-                                                    <t t-esc="table_line.product_template_id.x_package_height"/>
+                                                    <t t-esc="table_line.product_template_id.x_height"/>
                                                     cm
                                                 </p>
                                             </t>
