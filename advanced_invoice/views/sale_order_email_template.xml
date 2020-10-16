@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_data_sale_order_confirm" model="mail.template">
+            <field name="name">###Order: Send by Email</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="subject">Sofacompany Order (Ref ${object.name or 'n/a' })</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;font-family:Arial">
+                        <div style="width:100%;color: black;">
+                            % set order_date = format_datetime(object.date_order, tz='Asia/Saigon',
+                            dt_format='d/M/Y')
+                            % set shipping_date = format_datetime(object.commitment_date, tz='Asia/Saigon',
+                            dt_format='d/M/Y')
+                            <p style="float: left;"><b>Your Order Number: </b>${(object.name or '')}
+                            </p>
+                            <p style="float: right;"><b>Order Date: </b>${order_date}
+                            </p>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style="text-align:center">
+                            <hr style="border-top: 1px solid black;"/>
+                            <img src="https://vn.sofacompany.com/images/Untitled-1.png" width="301" height="29" alt=""/>
+                            <hr style="border-top: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div style="text-align:center;font-family:Arial;color: black;">
+                            <h2>
+                                <b>It's Ordered</b>
+                            </h2>
+                            <br/>
+                            Hi ${(object.partner_id.name or '')} - thank you for your order, we hope you enjoy shopping
+                            with us
+                            <br/>
+                            % set website_url = object.env['ir.config_parameter'].sudo().get_param('web.base.url')
+                            <br/>
+                            Click here to view your order details:
+                            <a href="${website_url}${object.get_portal_url()}">
+                                ${website_url}${object.get_portal_url()}
+                            </a>
+                            <br/>
+                            <br/>
+                            <div style="border-style: dashed;text-align:left">
+                                <br/>
+                                <p style="margin-left:20px">
+                                    <b>Your Invoicing and Shipping Address:</b>
+                                </p>
+                                <p style="margin-left:20px">${(object.partner_id.name or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_id.phone or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.street or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.street2 or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.x_ward_id.x_name or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.x_district_id.x_name or '')}
+                                </p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.state_id.name or '')}</p>
+                                <p style="margin-left:20px">${(object.partner_shipping_id.country_id.name or '')}</p>
+                                <br/>
+                                <p style="margin-left:20px"><b>Shipping Date: </b>${(shipping_date or '')}
+                                </p>
+                                <p style="margin-left:20px"><b>Payment Term: </b>${(object.payment_term_id.name or '')}
+                                </p>
+                                <br/>
+                            </div>
+                            <br/>
+                            <br/>
+                            <h2 style="text-align:left;">Pricing</h2>
+                            % set lines = object.order_line
+                            <table cellspacing="0" cellpadding="0" width="100%"
+                                   style="margin-top:30px;color:#666666;border-spacing: 1px;">
+                                <thead>
+                                    <tr style="color:black; font-size:13px;">
+                                        <th align="left" style="padding-bottom: 5px;width:50%;text-align:left;">
+                                            Product
+                                        </th>
+                                        <th style="width:5%;text-align:right;padding-left: 2px;" align="left">Qty</th>
+                                        <th style="width:15%;text-align:right;padding-left: 2px;" align="right">Unit
+                                            price
+                                        </th>
+                                        <th style="width:10%;text-align:right;padding-left: 2px;" align="right">Disc
+                                        </th>
+                                        <th style="width:5%;text-align:right;padding-left: 2px;" align="right">Tax</th>
+                                        <th style="width:15%;text-align:right;padding-left: 2px;" align="right">Amount
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height:1px;background-color:#9A6C8E;"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    % for line in lines:
+                                    <tr>
+                                        <td align="left"
+                                            style="padding-bottom: 0px;width:50%;text-align:left;vertical-align: top;color: black;">
+                                            ${line.name}
+                                        </td>
+                                        <td style="width:5%;text-align:right;vertical-align: top;padding-left: 2px;color: black;"
+                                            align="left">${line.product_uom_qty}
+                                        </td>
+                                        <td style="width:15%;text-align:right;vertical-align: top;padding-left: 2px;color: black;"
+                                            align="right">
+                                            % if line.discount:
+                                            <del style="color:red">${line.get_format_unit_price()}</del>
+                                            <p style="color:black">${line.get_format_discount_unit_price()}</p>
+                                            % else:
+                                            ${line.get_format_unit_price()}
+                                            % endif
+                                        </td>
+                                        <td style="width:10%;text-align:right;vertical-align: top;padding-left: 2px;"
+                                            align="right">
+                                            % if line.discount:
+                                            <b style="color:teal">${line.discount}%</b>
+                                            % endif
+                                        </td>
+                                        <td style="width:5%;text-align:right;vertical-align: top;padding-left: 2px;"
+                                            align="right"></td>
+                                        <td style="width:15%;text-align:right;vertical-align: top;padding-left: 2px;color: black;"
+                                            align="right">
+                                            ${line.get_format_price_subtotal()}${object.pricelist_id.currency_id.symbol}
+                                        </td>
+                                    </tr>
+                                    % endfor
+                                </tbody>
+                            </table>
+                            <div style="width:100%;color: black;">
+                                <div style="width:60%;float:left"></div>
+                                <div style="width:40%;float:right">
+                                    <hr/>
+                                    <p style="float: left;"><b>Subtotal </b>
+                                    </p>
+                                    <p style="float: right;">${object.get_format_amount_untaxed()}${object.pricelist_id.currency_id.symbol}
+                                    </p>
+                                    <div style="clear: both;"></div>
+                                    <hr/>
+                                    <p style="float: left;"><b>Total </b>
+                                    </p>
+                                    <p style="float: right;">${object.get_format_amount_total()}${object.pricelist_id.currency_id.symbol}
+                                    </p>
+                                    <div style="clear: both;"></div>
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <br/>
+                            <br/>
+                            <b style="font-size: 12pt">Have a question?</b>
+                            <br/>
+                            <br/>
+                            <a href="tel:1900 636845"
+                               style="padding: 10px 25px; color: white; text-decoration: none; background-color: black; border: 1px solid black; border-radius: 4px">
+                                Call Hotline Now
+                            </a>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div>
+                               <a style="margin: 2px" href="https://www.facebook.com/sofacompanyvn/">
+                                    <img src="https://image.flaticon.com/icons/png/512/124/124010.png" width="18" height="18" alt=""/>
+                                </a>
+                                <a style="margin: 2px" href="https://www.instagram.com/sofacompany_vn/">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/600px-Instagram_icon.png" width="18" height="18" alt=""/>
+                                </a>
+                                <a style="margin: 2px" href="https://www.youtube.com/channel/UClXnOYwvMZ5huWWVk9t4GoQ">
+                                    <img src="https://vignette.wikia.nocookie.net/logopedia/images/5/51/Youtube_2013_icon.png" width="18" height="18" alt=""/>
+                                </a>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div style="color: white; background-color: black;">
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Sofacompany Vietnam</p>
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Sala Residence, Tower A1 Sarimi, 74 Nguyen Co Thach,
+                                    District 2, Ho Chi Minh City
+                                </p>
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Open time: 10:00 - 18:00 (mon - Sun)</p>
+                                <br/>
+                                <p style="margin: 20px 0px px 20px; color: gray;">click here to unsubcribe</p>
+                                <br/>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+    </data>
+</odoo>

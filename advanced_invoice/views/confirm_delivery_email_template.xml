@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_data_delivery_confirm" model="mail.template">
+            <field name="name">###Delivery: Send by Email</field>
+            <field name="model_id" ref="model_stock_picking"/>
+            <field name="subject">Sofacompany Delivery Order (Ref ${object.name or 'n/a' })</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;font-family:Arial">
+                        <div style="width:100%;color: black;">
+                            % set order_date = format_datetime(object.sale_id.date_order, tz='Asia/Saigon',
+                            dt_format='d/M/Y')
+                            <p style="float: left;"><b>Your Order Number: </b>${(object.origin or '')}
+                            </p>
+                            <p style="float: right;"><b>Order Date: </b>${order_date}
+                            </p>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style="text-align:center">
+                            <hr style="border-top: 1px solid black;"/>
+                            <img src="https://vn.sofacompany.com/images/Untitled-1.png" width="301" height="29" alt=""/>
+                            <hr style="border-top: 1px solid black;"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div style="text-align:center;font-family:Arial;color: black;">
+                            <h2>
+                                <b>Your order has shipped &amp; is complete</b>
+                            </h2>
+                            <br/>
+                            Dear ${(object.partner_id.name or '')},
+                            <br/>
+                            <br/>
+                            Your package has been delivered to ${(object.partner_id.contact_address_full or '')}.
+                            <br/>
+                            <br/>
+                            Thanks again for choosing us for your purchase. If you have any questions or comments on
+                            your product, use the button below to contact our support team.
+                            <br/>
+                            <br/>
+                            Your order details: ${(object.origin or '')}
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <b style="font-size: 12pt">Have a question?</b>
+                            <br/>
+                            <br/>
+                            <a href="tel:1900 636845"
+                               style="padding: 10px 25px; color: white; text-decoration: none; background-color: black; border: 1px solid black; border-radius: 4px">
+                                Call Hotline Now
+                            </a>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div>
+                                <a style="margin: 2px" href="https://www.facebook.com/sofacompanyvn/">
+                                    <img src="https://image.flaticon.com/icons/png/512/124/124010.png" width="18" height="18" alt=""/>
+                                </a>
+                                <a style="margin: 2px" href="https://www.instagram.com/sofacompany_vn/">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/600px-Instagram_icon.png" width="18" height="18" alt=""/>
+                                </a>
+                                <a style="margin: 2px" href="https://www.youtube.com/channel/UClXnOYwvMZ5huWWVk9t4GoQ">
+                                    <img src="https://vignette.wikia.nocookie.net/logopedia/images/5/51/Youtube_2013_icon.png" width="18" height="18" alt=""/>
+                                </a>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div style="color: white; background-color: black;">
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Sofacompany Vietnam</p>
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Sala Residence, Tower A1 Sarimi, 74 Nguyen Co Thach,
+                                    District 2, Ho Chi Minh City
+                                </p>
+                                <br/>
+                                <p style="margin: 20px 0px px 0px;">Open time: 10:00 - 18:00 (mon - Sun)</p>
+                                <br/>
+                                <p style="margin: 20px 0px px 20px; color: gray;">click here to unsubcribe</p>
+                                <br/>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </field>
+            <!--            <field name="report_template" ref="stock.action_report_delivery"/>-->
+            <!--            <field name="report_name">${(object.name or '').replace('/','_')}</field>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+    </data>
+</odoo>

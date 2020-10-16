@@ -32,6 +32,8 @@
         'views/account_move_views.xml',
         'views/product_template_views.xml',
         'views/stock_picking.xml',
+        'views/confirm_delivery_email_template.xml',
+        'views/sale_order_email_template.xml',
     ],
     # only loaded in demonstration mode
 
