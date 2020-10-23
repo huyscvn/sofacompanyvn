@@ -29,12 +29,13 @@ class StockPicking(models.Model):
                         phone = str(rec.sale_id.x_studio_mobile)
                         bid = rec.sale_id.name
                         sms = " Don hang ["+rec.sale_id.name+"] da duoc giao thanh cong. Chuc quy khach co trai nghiem tot voi SOFACOMPANY"
-                        url = "https://cloudsms.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
+                        url = "https://cloudsms4.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
                             phone, sms, bid)
                         payload = {}
                         headers = {}
                         try:
-                            requests.request("POST", url, headers=headers, data=payload)
+                            res = requests.request("POST", url, headers=headers, data=payload)
+                            print(res.json())
                         except:
                             e = 0
         return res
