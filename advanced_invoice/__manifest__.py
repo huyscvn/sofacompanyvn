@@ -17,7 +17,7 @@
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '12.0.3',
+    'version': '12.1.0',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'product', 'sale', 'sale_stock', 'sale_coupon', 'stock', 'phone_validation'],
@@ -34,6 +34,7 @@
         'views/stock_picking.xml',
         'views/confirm_delivery_email_template.xml',
         'views/sale_order_email_template.xml',
+        'views/res_partner_views.xml',
     ],
     # only loaded in demonstration mode
 
