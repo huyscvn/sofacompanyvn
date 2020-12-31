@@ -22,7 +22,7 @@ class StockPicking(models.Model):
 
     def write(self, vals):
         res = super(StockPicking, self).write(vals)
-        if 'state' in vals:
+        if 'date_done' in vals:
             now = datetime.now()
             for rec in self:
                 if rec.state == 'done':
