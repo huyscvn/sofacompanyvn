@@ -37,5 +37,23 @@
         <record id="action_print_advanced_quotation" model="ir.actions.report">
             <field name="paperformat_id" ref="advanced_invoice.custom_paper_format"/>
         </record>
+        <record id="sale_order_inherit" model="ir.ui.view">
+            <field name="name">sale_order_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//sheet/div" position="inside">
+                    <field name="count_inventory_fees_invoice" invisible="1"/>
+                    <button name="action_open_inventory_fees_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            style="width:200px"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('count_inventory_fees_invoice', '=', 0)]}">
+                        <field name="count_inventory_fees_invoice" widget="statinfo" string="Hóa đơn phí lưu kho"/>
+                    </button>
+                 </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

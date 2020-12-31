@@ -26,6 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         # 'views/templates.xml',
+        'data/product_inventory_fees_data.xml',
         'views/quotation_template.xml',
         'views/sale_order_views.xml',
         'views/invoice_template.xml',
