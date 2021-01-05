@@ -8,3 +8,4 @@ from . import res_partner
 from . import sale_order_line
 from . import account_move
 from . import sale_order
+from . import create_inventory_fee_invoice_wizard

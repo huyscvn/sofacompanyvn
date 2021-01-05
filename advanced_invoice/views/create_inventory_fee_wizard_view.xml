@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="create_inventory_fee_wizard_view" model="ir.ui.view">
+            <field name="name">create_inventory_fee_wizard_view</field>
+            <field name="model">create.inventory.fee.invoice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="scheduled_date" readonly="1"/>
+                            <field name="predicted_date"/>
+                            <field name="inventory_fee" readonly="1"/>
+                            <field name="days_late" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_inventory_fee_invoice" type="object" string="Xác nhận" class="oe_highlight"/>
+                        <button string="Cancel" type="object" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

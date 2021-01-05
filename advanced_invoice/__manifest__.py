@@ -36,6 +36,7 @@
         'views/confirm_delivery_email_template.xml',
         'views/sale_order_email_template.xml',
         'views/res_partner_views.xml',
+        'views/create_inventory_fee_wizard_view.xml',
     ],
     # only loaded in demonstration mode
 

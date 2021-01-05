@@ -8,7 +8,21 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='do_print_picking']" position="after">
                     <button name="do_print_invoice" string="Print Invoice" type="object"/>
+                    <button name="create_inventory_fee_invoice" string="Tạo hóa đơn lưu kho" type="object"
+                            attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
                 </xpath>
+                <xpath expr="//sheet/div" position="inside">
+                    <field name="count_inventory_fees_invoice" invisible="1"/>
+                    <button name="action_open_inventory_fees_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            style="width:200px"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('count_inventory_fees_invoice', '=', 0)]}">
+                        <field name="count_inventory_fees_invoice" widget="statinfo" string="Hóa đơn phí lưu kho"/>
+                        <field name="picking_type_code" invisible="1"/>
+                    </button>
+                 </xpath>
             </field>
         </record>
     </data>
