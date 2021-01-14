@@ -50,26 +50,26 @@ class SaleOrder(models.Model):
             return amount_total
 
     ### TODO gui tin nhan
-    # def action_confirm(self):
-    #     res = super(SaleOrder, self).action_confirm()
-    #     template = self.env.ref('advanced_invoice.mail_template_data_sale_order_confirm', raise_if_not_found=False)
-    #     for order in self:
-    #         if template:
-    #             template.send_mail(order.id, force_send=True, raise_exception=False)
-    #         if order.x_studio_mobile:
-    #             phone = str(order.x_studio_mobile)
-    #             bid = order.name
-    #             sms = "Cam on quy khach da dat hang tai SOFACOMPANY. Ma don hang [" + order.name + "] tri gia [" + order.get_format_amount_total() + "]d. CSKH: 1900636845 (10:00 - 18:00)"
-    #             url = "https://cloudsms4.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
-    #             phone, sms, bid)
-    #             payload = {}
-    #             headers = {}
-    #             try:
-    #                 res = requests.request("POST", url, headers=headers, data=payload)
-    #                 print(res.json())
-    #             except:
-    #                 e = 0
-    #     return res
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        template = self.env.ref('advanced_invoice.mail_template_data_sale_order_confirm', raise_if_not_found=False)
+        for order in self:
+            if template:
+                template.send_mail(order.id, force_send=True, raise_exception=False)
+            if order.x_studio_mobile:
+                phone = str(order.x_studio_mobile)
+                bid = order.name
+                sms = "Cam on quy khach da dat hang tai SOFACOMPANY. Ma don hang [" + order.name + "] tri gia [" + order.get_format_amount_total() + "]d. CSKH: 1900636845 (10:00 - 18:00)"
+                url = "https://cloudsms4.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
+                phone, sms, bid)
+                payload = {}
+                headers = {}
+                try:
+                    res = requests.request("POST", url, headers=headers, data=payload)
+                    print(res.json())
+                except:
+                    e = 0
+        return res
     ### TODO gui tin nhan
 
     def action_open_inventory_fees_invoice(self):

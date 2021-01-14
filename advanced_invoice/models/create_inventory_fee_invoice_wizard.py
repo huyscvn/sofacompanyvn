@@ -23,7 +23,7 @@ class CreateInventoryFeeInvoice(models.TransientModel):
             scheduled_date_timezone = pytz.utc.localize(scheduled) + relativedelta(hours=7)
             now_date = self.predicted_date
             scheduled_date = scheduled_date_timezone.date()
-            days_late = int((now_date - scheduled_date).days) - 7
+            days_late = int((now_date - scheduled_date).days)
             if days_late > 0:
                 self.inventory_fee = round(total * days_late * 0.5 / 100, -3)
                 self.days_late = days_late

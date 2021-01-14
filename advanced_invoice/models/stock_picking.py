@@ -63,21 +63,21 @@ class StockPicking(models.Model):
                             ### TODO gui tin nhan
                             template = self.env.ref('advanced_invoice.mail_template_data_delivery_confirm',
                                                     raise_if_not_found=False)
-                            # if template:
-                            #     template.send_mail(rec.id, force_send=True, raise_exception=False)
-                            # if rec.sale_id.x_studio_mobile:
-                            #     phone = str(rec.sale_id.x_studio_mobile)
-                            #     bid = rec.sale_id.name
-                            #     sms = " Don hang ["+rec.sale_id.name+"] da duoc giao thanh cong. Chuc quy khach co trai nghiem tot voi SOFACOMPANY"
-                            #     url = "https://cloudsms4.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
-                            #         phone, sms, bid)
-                            #     payload = {}
-                            #     headers = {}
-                            #     try:
-                            #         res = requests.request("POST", url, headers=headers, data=payload)
-                            #         print(res.json())
-                            #     except:
-                            #         e = 0
+                            if template:
+                                template.send_mail(rec.id, force_send=True, raise_exception=False)
+                            if rec.sale_id.x_studio_mobile:
+                                phone = str(rec.sale_id.x_studio_mobile)
+                                bid = rec.sale_id.name
+                                sms = " Don hang ["+rec.sale_id.name+"] da duoc giao thanh cong. Chuc quy khach co trai nghiem tot voi SOFACOMPANY"
+                                url = "https://cloudsms4.vietguys.biz:4438/api/index.php?u=sofacompany&pwd=28ruv&from=SOFACOMPANY&phone=%s&sms=%s&bid=%s&type=8&json=1" % (
+                                    phone, sms, bid)
+                                payload = {}
+                                headers = {}
+                                try:
+                                    res = requests.request("POST", url, headers=headers, data=payload)
+                                    print(res.json())
+                                except:
+                                    e = 0
                             ### TODO gui tin nhan
                             if not self.count_inventory_fees_invoice > 0:
                                 if rec.scheduled_date:
@@ -89,7 +89,7 @@ class StockPicking(models.Model):
                                     scheduled_date_timezone = pytz.utc.localize(scheduled) + relativedelta(hours=7)
                                     now_date = now_timezone.date()
                                     scheduled_date = scheduled_date_timezone.date()
-                                    days_late = int((now_date - scheduled_date).days) - 7
+                                    days_late = int((now_date - scheduled_date).days)
                                     if days_late > 0:
                                         inventory_fees = round(total * days_late * 0.5 / 100, -3)
                                         if inventory_fees > 0:
