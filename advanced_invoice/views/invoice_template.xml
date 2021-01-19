@@ -249,7 +249,13 @@
                                 <tr style="">
                                     <td style="width: 40%; text-align: left;" rowspan="3">
                                         <t t-if="doc.sale_order_id">
-                                            <pre><t t-esc="doc.sale_order_id.note"/></pre>
+                                            <t t-if="doc.is_inventory_fees == False">
+                                                <pre><t t-esc="doc.sale_order_id.note"/></pre>
+                                                </t>
+                                                <t t-else="">
+                                                <pre><t t-esc="doc.narration"/></pre>
+
+                                        </t>
                                     </t>
                                     </td>
                                     <td style="width: 10%; "></td>
