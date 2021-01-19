@@ -42,6 +42,7 @@ class CreateInventoryFeeInvoice(models.TransientModel):
         invoice_id = self.env['account.move'].create({
             'type': 'out_invoice',
             'partner_id': self.sudo().sale_order_id.partner_id.id,
+            'partner_shipping_id': self.sudo().sale_order_id.partner_id.id,
             'inventory_fees_order_id': self.sudo().sale_order_id.id,
             'is_inventory_fees': True,
             'journal_id': journal_id,

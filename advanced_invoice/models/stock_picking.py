@@ -106,6 +106,7 @@ class StockPicking(models.Model):
                                             invoice_id = self.env['account.move'].create({
                                                 'type': 'out_invoice',
                                                 'partner_id': rec.sudo().sale_id.partner_id.id,
+                                                'partner_shipping_id': rec.sudo().sale_id.partner_id.id,
                                                 'inventory_fees_order_id': rec.sudo().sale_id.id,
                                                 'is_inventory_fees': True,
                                                 'journal_id': journal_id,
